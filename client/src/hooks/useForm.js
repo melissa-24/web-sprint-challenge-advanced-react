@@ -1,24 +1,15 @@
 // write your custom hook here to control your checkout form
-import { useLocalStorage } from './useLocalStorage';
+import { useState } from 'react'
 
-export const useForm = (initialState, key, submitLogic) => {
-  const [values, setValues] = useLocalStorage(initialState, key);
+const useForm = (initialState, key) => {
+  const [values, setValues] = useState(initialState, key)
 
   const handleChanges = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value
-    });
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const clearForm = () => {
-    setValues(initialState);
-  };
+return [values, handleChanges]
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submitLogic();
-  };
+}
 
-  return [values, handleChanges, clearForm, handleSubmit];
-};
+export default useForm

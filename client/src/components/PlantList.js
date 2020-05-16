@@ -14,13 +14,16 @@ export default class PlantList extends Component {
   //   - set the returned plants array to this.state.plants
 
   componentDidMount() {
-    axios.get('http://localhost:3333/plants')
-      .then((res) => {
-        console.log('mounted', res);
-        this.setState({ plants: res.data.plantsData })
-      })
-        .catch((err) => console.log(err))
-  };
+    axios
+    .get("http://localhost:3333/plants")
+    .then(res => {
+      this.setState({
+        plants: res.data.plantsData
+      });
+      console.log("nb: PlantList: CDM: axios stat: ", this.state.plants)
+    })
+    .catch(err => console.log("Error: ", err));
+  }
 
   /*********  DON'T CHANGE ANYTHING IN THE RENDER FUNCTION *********/
   render() {
