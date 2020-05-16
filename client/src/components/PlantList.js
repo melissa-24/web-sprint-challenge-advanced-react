@@ -3,27 +3,26 @@ import axios from "axios";
 
 export default class PlantList extends Component {
   // add state with a property called "plants" - initialize as an empty array
-  constructor() {
-    super();
-    this.state = {
-      plants: []
-    };
-  };
+  state = {
+    plants: [],
+    error: ''
+  }
+
   // when the component mounts:
   //   - fetch data from the server endpoint - http://localhost:3333/plants
   //   - set the returned plants array to this.state.plants
-
   componentDidMount() {
-    axios
-    .get("http://localhost:3333/plants")
-    .then(res => {
-      this.setState({
-        plants: res.data.plantsData
-      });
-      console.log("nb: PlantList: CDM: axios stat: ", this.state.plants)
-    })
-    .catch(err => console.log("Error: ", err));
-  }
+  fetch('http://localhost:3333/plants')
+  .then(res => res.json())
+  .then(res => {
+    console.log(res.plantsData)
+    if(res.status === 'error') {
+      this.setState({ error: res.message });
+    } else {
+      this.setState({ plants: res.plantsData });
+    }
+  })
+}
 
   /*********  DON'T CHANGE ANYTHING IN THE RENDER FUNCTION *********/
   render() {
